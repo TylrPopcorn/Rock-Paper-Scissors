@@ -1,5 +1,6 @@
 import random
 
+# ASCII Art
 paper =  """ __  __ _ _ __   ___ _ __ 
 | '_ \ / _` | '_ \ / _ \ '__|
 | |_) | (_| | |_) |  __/ |   
@@ -13,80 +14,53 @@ rock = """                _
  _ __ ___   ___| | __
 | '__/ _ \ / __| |/ /
 | | | (_) | (__|   < 
-|_|  \___/ \___|_|\_\""""
-
+|_|  \___/ \___|_|\_\\
+"""
 
 scissors = """ ___  ___ _ ___ ___  ___  _ __ ___ 
 / __|/ __| / __/ __|/ _ \| '__/ __|
-\__ \ (__| \__ \__ \ (_) | |  \__ \
-|___/\___|_|___/___/\___/|_|  |___/"""
+\__ \ (__| \__ \__ \ (_) | |  \__ \\
+|___/\___|_|___/___/\___/|_|  |___/
+"""
 
-# VARIABLES
-results = ["paper", "rock", "scissors"];
-# ---------------
+# CHOICES
+ascii_art = {
+    "rock": rock,
+    "paper": paper,
+    "scissors": scissors
+}
 
-# GAME CHOICES
-human_choice = input("rock, paper, or scissors")
-human_choice = human_choice.lower()
+options = ["rock", "paper", "scissors"]
 
-computer_choice = random.randint(0,2);
-bot_result = results[computer_choice];
+# USER INPUT
+human_choice = input("rock, paper, or scissors? ").lower()
+if human_choice not in options:
+    print("Invalid choice. Please choose rock, paper, or scissors.")
+    exit()
 
+# BOT CHOICE
+bot_choice = random.choice(options)
 
-# OUTPUT
-print(f"You chose:{human_choice}")
-print(f"The computer chose:{bot_result}")
+# SHOW CHOICES
+print(f"\nYou chose:\n{ascii_art[human_choice]}")
+print(f"\nComputer chose:\n{ascii_art[bot_choice]}")
 
-# Game Logic
-You_lose = False
-#-------
-
-if (human_choice == "paper" and bot_result == "scissors"):
-    You_lose = True
-    print(paper)
-    print(scissors)
-elif (human_choice == "rock" and bot_result == "paper"):
-    You_lose = True
-    print(rock)
-    print(paper)
-elif (human_choice == "scissors" and bot_result == "rock"):
-    You_lose = True
-    print(scissors)
-    print(rock)
-elif (human_choice == "paper" and bot_result == "rock"):
-    You_lose = False
-    print(paper)
-    print(rock)
-elif (human_choice == "rock" and bot_result == "scissors"):
-    You_lose = False
-    print(paper)
-    print(scissors)
-elif (human_choice == "scissors" and bot_result == "paper"):
-    You_lose = False
-    print(scissors)
-    print(paper)
-elif (human_choice == "paper" and bot_result == "paper"):
-    You_lose = "Draw"
-    print(paper)
-    print(paper)
-elif (human_choice == "rock" and bot_result == "rock"):
-    You_lose = "Draw"
-    print(rock)
-    print(rock)
-elif (human_choice == "scissors" and bot_result == "scissors"):
-    You_lose = "Draw"
-    print(scissors)
-    print(scissors)
+# GAME LOGIC
+if human_choice == bot_choice:
+    result = "draw"
+elif (
+    (human_choice == "rock" and bot_choice == "scissors") or
+    (human_choice == "paper" and bot_choice == "rock") or
+    (human_choice == "scissors" and bot_choice == "paper")
+):
+    result = "win"
 else:
-    You_lose = True
+    result = "lose"
 
 # RESULT
-if (You_lose == True):
-    print("\nYOU LOST!")
-elif (You_lose == "Draw"):
+if result == "draw":
     print("\nDRAW!")
+elif result == "win":
+    print("\nYOU WIN!")
 else:
-    print("\nYOU WIN!");
-
-
-    
+    print("\nYOU LOST!")
